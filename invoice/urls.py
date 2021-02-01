@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-
 from . import views
 
+app_name = 'invoice'
+
 urlpatterns = [
-    path('create', views.CreateInvoice.as_view()),
-    path('', views.ListInvoice.as_view()),
-    path('api/invoice/', views.APIInvoiceList.as_view())
+    path('', views.list_invoice, name='list_invoice'),
+    path('add/', views.add_invoice, name='add_invoice'),
 ]

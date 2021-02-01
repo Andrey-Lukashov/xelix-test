@@ -1,6 +1,5 @@
-from django.views.generic import CreateView, TemplateView
-from rest_framework import generics
-
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from .forms import InvoiceForm
 from .models import Invoice
 from .serializers import InvoiceSerializer
@@ -8,18 +7,19 @@ from .serializers import InvoiceSerializer
 
 # Web views
 
-class ListInvoice(TemplateView):
-    template_name = 'invoice_list.html'
+def list_invoice(request):
+    context = {}
+
+    invoice_list = Invoice.objects.all().order_by('-date_posted')
+    context['invoice_list'] = invoice_list
+
+    return render(request, 'invoice_list.html', context=context)
 
 
-class CreateInvoice(CreateView):
-    template_name = 'invoice_create.html'
-    model = Invoice
-    form_class = InvoiceForm
+def add_invoice(request):
+    context = {}
 
+    form = InvoiceForm()
+    context['form'] = form
 
-# API (Django REST Framework) views
-
-class APIInvoiceList(generics.ListAPIView):
-    queryset = Invoice.objects.all()
-    serializer_class = InvoiceSerializer
+    return render(request, 'add_invoice.html', context=context)
