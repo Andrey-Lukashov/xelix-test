@@ -10,7 +10,8 @@ class DateInput(forms.DateInput):
 class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
-        fields = ['internal_reference', 'gross_amount', 'supplier_reference', 'date_posted', 'company_name']
+        fields = ['internal_reference', 'gross_amount', 'supplier_reference', 'date_posted', 'company']
+
         widgets = {
             'date_posted': DateInput()
         }

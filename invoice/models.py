@@ -19,4 +19,5 @@ class Invoice(models.Model):
                                        blank=True, null=True, default=0)
     supplier_reference = models.CharField(max_length=36)
     date_posted = models.DateField()
-    company_name = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)

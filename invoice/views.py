@@ -31,7 +31,7 @@ def add_invoice(request):
                                          gross_amount=gross_amount,
                                          supplier_reference=supplier_reference,
                                          date_posted=date_posted,
-                                         company_name=data.get('company_name'))
+                                         company=data.get('company'))
 
         invoice.save()
         context['message'] = 'Successfully added new invoice'
@@ -43,11 +43,20 @@ def add_invoice(request):
     return render(request, 'invoice_create.html', context=context)
 
 
-def show_invoice(request, invoice_id):
+def search_invoice(request, internal_reference):
     context = {}
 
-    return render(request, 'detail_invoice.html', context=context)
+    invoiceS = Invoice.objects.filter(internal_reference=internal_reference)
+    context['message'] = 'Searching for invoice with reference: ' + internal_reference
+    context['invoice'] = invoiceS
+
+    return render(request, 'search_invoice.html', context=context)
 
 
-def invoice_detail(request,company_id):
+def search_company(request, company_id):
+    context = {}
+
     company = get_object_or_404(Company,pk=company_id)
+    context['message'] = 'Showing invoices for company: ' + company.name
+    context['company'] = company
+    return render(request, 'search_company.html', context=context)
