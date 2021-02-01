@@ -1,25 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-{% if message %}<p><strong>{{ message }}</strong></p>{% endif %}
-
-<p>
-  <a href="{% url 'invoice:add_invoice' %}">Add Invoice</a>
-</p>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 <table style="width:100%">
   <tr>
-        <th>company name</th>
     <th>Internal Reference</th>
     <th>Supplier Reference</th>
     <th>Gross Amount</th>
+
   </tr>
   {% for invoice in invoice_list %}
   <tr>
-       <td>{{invoice.company_name.name}}</td>
     <td>{{invoice.internal_reference}}</td>
     <td>{{invoice.supplier_reference}}</td>
     <td>{{invoice.gross_amount}}</td>
   </tr>
   {% endfor %}
 </table>
-
 {% endblock %}
